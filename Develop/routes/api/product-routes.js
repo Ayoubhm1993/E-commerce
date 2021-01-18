@@ -12,9 +12,12 @@ router.get('/', (req, res) => {
     include:[
       {
         model: Category,
-        attributes:['category_name']
-      }
-    ]
+        attributes:['id','category_name']
+      },
+      {
+        model: Tag,
+        attributes:['id','tag_name']
+      }]
   }).then(dbProductData=> res.json(dbProductData))
   .catch(err=>{
     console.log(err);
@@ -31,8 +34,18 @@ router.get('/:id', (req, res) => {
       id:req.params.id
     },
     attributes: ['id','product_name','price','stock','category_id'],
+    include:[{
+      model:Category,
+      attributes:['id','category_name']
+    },
+  {
+    model: Tag,
+    attributes: ['id','tag_name']
+  }]
     
-  }).then(dbProductData=> res.json(dbProductData))
+  }).then(dbProductData=> {
+    if(!dbProductData){res.status(404).json( { message: 'No Product fOUND WITH THIS ID'} )}
+    res.json(dbProductData)})
   .catch(err=>{
     console.log(err);
     res.status(500).json(err);
@@ -115,6 +128,21 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  Product.destroy({
+    where: {
+      id: req.params.id
+    }
+
+  }).then(dbProductData=>{
+    if(!dbProductData){
+      res.status(404).json( {message:'No product found with this id'} );
+      return;
+    }
+    res.json(dbProductData)
+  }).catch(err=>{
+    console.log(err);
+    res.status(500).json(err);
+  })
 });
 
 module.exports = router;

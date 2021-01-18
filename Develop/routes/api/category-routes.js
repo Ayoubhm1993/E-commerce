@@ -1,3 +1,4 @@
+const sequelize = require('../../config/connection')
 const router = require('express').Router();
 const { Category, Product } = require('../../models');
 const { findAll } = require('../../models/Tag');
@@ -13,7 +14,7 @@ router.get('/', (req, res) => {
       model: Product,
       attributes: ['product_name']
       }]
-  }).then(dbUserData => res.json(dbUserData))
+  }).then(dbCategoryData => res.json(dbCategoryData))
   .catch(err=>{
     console.log(err);
     res.status(500).json(err);
@@ -76,6 +77,22 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete a category by its `id` value
+  Category.destroy({
+    where: {
+      id: req.params.id
+    }
+  }).then(dbCategoryData => {
+    if(!dbCategoryData){
+      res.status(404).json( { message: 'No Category found with this ID'} );
+      return;
+    }
+    res.json(dbCategoryData);
+  }).catch(err => {
+
+    console.log(err);
+    res.status(500).json(err);
+  });
+
 });
 
 module.exports = router;
