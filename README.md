@@ -23,15 +23,29 @@
   Open file in VScode => Open Terminal
   
   Type:
+
     1-cd develop
 
     2-npm install in your Terminal
+
+    3-npm install express sequelize mysql2 dotenv
   
-  Open Mysql server and run source db/schema.sql
+  Open Mysql server and run:
+  
+    1-SHOW databases;
+
+    2-Select your database by typing: USE <Database name>;
+
+    3-source db/schema.sql;
+
 
   Exit Mysql by typing : quit
+  
+  Run in your terminal:
 
-  Run server : node server.js
+  1- npm run seed or node seeds/index.js
+
+  2- To start server : node server.js or npm start
 
   
 
