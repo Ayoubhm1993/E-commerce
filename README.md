@@ -3,8 +3,8 @@
 
   # Description :
 
-  This is a backend application that serve e-commerce web-app ,It uses Express.js and sequalize
-  with dotenv package to store Mysql variables
+  This is a backend application that serve e-commerce web-app ,It uses Express.js and the sequalize ORM
+  with dotenv package to store MYSQL variables
 
 
   # Table Of Contents :
